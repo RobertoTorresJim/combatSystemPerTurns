@@ -1,0 +1,26 @@
+using System.Collections.Generic;
+
+public class TypeChart
+{
+    private static readonly Dictionary<(PokemonType, PokemonType), float> typeEffectiveness = new()
+    {
+        // Ejemplo de relaciones de tipos
+        { (PokemonType.Fire, PokemonType.Grass), 2.0f },
+        { (PokemonType.Fire, PokemonType.Water), 0.5f },
+        { (PokemonType.Water, PokemonType.Fire), 2.0f },
+        { (PokemonType.Grass, PokemonType.Water), 2.0f },
+        { (PokemonType.Grass, PokemonType.Fire), 0.5f },
+        { (PokemonType.Fire, PokemonType.Fire), 0.5f },
+        { (PokemonType.Normal, PokemonType.Rock), 0.5f },
+        { (PokemonType.Normal, PokemonType.Ghost), 0.0f }
+    };
+
+    public static float GetEffectiveness(PokemonType attackType, PokemonType defenderType)
+    {
+        if (typeEffectiveness.TryGetValue((attackType, defenderType), out float effectiveness))
+        {
+            return effectiveness;
+        }
+        return 1.0f; // Sin ventaja ni desventaja
+    }
+}

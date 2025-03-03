@@ -1,0 +1,65 @@
+public class Monster
+{
+    // Atributos básicos (igual que antes)
+    public string name;
+    public MonsterType primaryType;
+    public MonsterType? secondaryType;
+    public int level;
+    public int maxHealth;
+    public int currentHealth;
+    public int attack;
+    public int specialAttack;
+    public int defense;
+    public int specialDefense;
+    public int speed;
+    public Ability ability;
+    public Attack[] moves;
+
+    // Nuevos atributos para experiencia
+    public int experience;
+    private const int experienceToNextLevel = 100; // Experiencia requerida por nivel
+
+    public Monster(string name, MonsterType primaryType, int level, int maxHealth, int attack, int specialAttack, int defense, int specialDefense, int speed, Ability ability, Attack[] moves, MonsterType? secondaryType = null)
+    {
+        this.name = name;
+        this.primaryType = primaryType;
+        this.secondaryType = secondaryType;
+        this.level = level;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
+        this.attack = attack;
+        this.specialAttack = specialAttack;
+        this.defense = defense;
+        this.specialDefense = specialDefense;
+        this.speed = speed;
+        this.ability = ability;
+        this.moves = moves;
+        this.experience = 0; // Inicia con 0 experiencia
+    }
+
+    public void GainExperience(int exp)
+    {
+        experience += exp;
+        Debug.Log($"{name} ganó {exp} puntos de experiencia. Total: {experience}");
+
+        if (experience >= experienceToNextLevel)
+        {
+            LevelUp();
+        }
+    }
+
+    private void LevelUp()
+    {
+        experience -= experienceToNextLevel; // Ajustar la experiencia sobrante
+        level++;
+        maxHealth += 10; // Incrementos de estadísticas
+        attack += 5;
+        specialAttack += 5;
+        defense += 3;
+        specialDefense += 3;
+        speed += 2;
+        currentHealth = maxHealth;
+
+        Debug.Log($"{name} subió a nivel {level}! Salud máxima: {maxHealth}, Ataque: {attack}");
+    }
+}
